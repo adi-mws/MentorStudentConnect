@@ -1,5 +1,5 @@
 import express from 'express';
-import connectDB from './db/connectDb.js';
+import connectDB from './db/connectDB.js'
 import dotenv from 'dotenv';
 import http from 'http'
 // import adminRoutes from './routes/adminRoutes.js';
