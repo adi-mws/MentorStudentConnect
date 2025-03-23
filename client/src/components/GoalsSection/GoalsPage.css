@@ -1,0 +1,24 @@
+.GoalsPage{
+    h1{
+        padding: 2rem;
+        width: 100%;
+    }
+    .GoalsSection{
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: auto;
+        gap: 2rem;
+    }
+}
+
+@media (max-width:576px){
+    .GoalsPage{
+        .h1{
+            text-align: center;
+        }
+        .GoalsSection{
+            grid-template-columns: 1fr;
+        }
+    }
+}    

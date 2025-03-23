@@ -1,0 +1,15 @@
+.StudentLanding{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    .MentorProgress{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-items: center;
+        align-items: center;
+        p{
+            font: bold;
+            font-size: 3rem;
+        }
+    }
+}
