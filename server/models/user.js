@@ -5,12 +5,12 @@ const userSchema = new mongoose.Schema({
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
 
-    profileId: { type: mongoose.Schema.Types.ObjectId, refPath: 'profileModel', required: true },
+    profileId: { type: mongoose.Schema.Types.ObjectId, refPath: 'profileModel', required: false },
     profileModel: { type: String, enum: ['StudentProfile', 'AlumniProfile', 'MentorProfile'], required: true },
 
     role: {
         type: String,
-        enum: ['student', 'alumni', 'mentor'],
+        enum: ['student', 'alumni', 'mentor', 'admin'],
         default: 'student'
     },
 

@@ -25,9 +25,9 @@ export default function Header({ locationState = '' }) {
                             </li>
                           
                         </ul>
-                        <div className="auth-options-container d-flex flex-row justify-content-center">
-                            <button className="btn px-5 flex-grow-1 mx-2" onClick={() => { navgiate('/login') }}>Login</button>
-                            <button className="btn btn-primary px-5 flex-grow-1" onClick={() => {navgiate('/register')}}>Sign Up</button>
+                        <div className="auth-options-container d-flex flex-column flex-md-row">
+                            <button className="btn px-5 flex-grow-1 mx-2" onClick={() => { navgiate('/mentor/login') }}>Mentor Login</button>
+                            <button className="btn btn-primary px-5 flex-grow-1" onClick={() => {navgiate('/login')}}>Student Login</button>
                         </div>
 
                         {/* <form className="d-flex" role="search">
