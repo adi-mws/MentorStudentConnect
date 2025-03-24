@@ -18,8 +18,11 @@ import LoginPage from './pages/LoginPage'
 import Dashboard from './layouts/Dashboard'
 import MentoringGroup from './components/dashboard/MentoringGroup'
 import SearchMentors from './components/dashboard/SearchMentors'
+import Discussions from './components/dashboard/Discussions'
+import DiscussionForum from './components/dashboard/DiscussionForum'
 import PublicPostsPage from './pages/PublicPostsPage'
 import StudentAlumniRegistrationPage from './pages/StudentAlumniRegistrationPage.jsx'
+
 function App() {
 
   return (
@@ -28,6 +31,7 @@ function App() {
         <NotificationProvider>
           <Router>
             <Routes>
+
               {/* Student and Alumni Dashboard */}
               <Route path='/dashboard' element={<Dashboard />}>
                 <Route path='/dashboard' context={{ locationState: 'Dashboard' }} element={<DashboardMainPage />} />
@@ -35,8 +39,13 @@ function App() {
                 <Route path='/dashboard/mentors' element={<Mentors />} />
                 <Route path='/dashboard/search-mentors' element={<SearchMentors />} />
                 <Route path='/dashboard/goals' element={<Goals />} />
-
+                <Route path='/dashboard/discussions' element={<Discussions />} />
+                <Route path='/dashboard/webinars' element={<Discussions />} />
+                <Route path='/dashboard/webinars/:id' element={<Discussions />} />
+                <Route path='/dashboard/discussions/:id' element={<DiscussionForum />} />
               </Route>
+
+
               {/* Admin  Dashboard  */}
               <Route path='/admin/dashboard' element={<Dashboard type='admin' />}>
                 <Route index element={<DashboardMainPage />} />
@@ -68,7 +77,6 @@ function App() {
                 <Route path='/goals' element={<GoalsPage />} />
                 <Route path='/public-posts' element={<PublicPostsPage />} />
                 <Route path='/alumni-registration' element={<StudentAlumniRegistrationPage type="alumni" />} />
-
 
                 {/* Mentors Routes */}
                 <Route path='/mentor/login' element={<LoginPage type='mentor' />} />

@@ -12,6 +12,8 @@ const StudentSidebarComponents = ({ locationState }) => {
         <li ><Link to="/dashboard" className={`${locationState === 'dashboard' ? 'active' : ''} sidebar-item`}><i className="fa-solid fa-chart-line"></i> Dashboard</Link></li>
         <li ><Link to="/dashboard/profile" className={`${locationState === 'profile' ? 'active' : ''} sidebar-item`}><i className="fa-solid fa-circle-user"></i> Profile</Link></li>
         <li ><Link to="/dashboard/mentors" className={`${locationState === 'mentors' ? 'active' : ''} sidebar-item`}><i className="fa-solid fa-user-tie"></i> Mentors</Link></li>
+        <li ><Link to="/dashboard/discussions" className={`${location.pathname.includes('/dashboard/discussions') ? 'active' : ''} sidebar-item`}><i className="fa-solid fa-comments"></i> Discussions</Link></li>
+        <li ><Link to="/dashboard/webinars" className={`${locationState === 'webinars' ? 'active' : ''} sidebar-item`}><i className="fa-solid fa-earth"></i> Webinars</Link></li>
         <li ><Link to="/dashboard/goals" className={`${locationState === 'goals' ? 'active' : ''} sidebar-item`}><i className="fa-solid fa-bullseye"></i> Goals</Link></li>
       </ul>
       <ul className="sidebar-category">
@@ -98,6 +100,8 @@ export default function Sidebar({ type }) {
     '/dashboard/mentors': 'mentors',
     '/dashboard/search-mentors': 'mentors',
     '/dashboard/students': 'students',
+    '/dashboard/discussions': 'discussions',
+    '/dashboard/webinars': 'webinars',
 
     '/dashboard/messages': 'messages',
     '/admin/dashboard': 'dashboard',
