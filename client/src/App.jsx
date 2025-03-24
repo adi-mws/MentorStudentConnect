@@ -20,6 +20,9 @@ import MentoringGroup from './components/dashboard/MentoringGroup'
 import SearchMentors from './components/dashboard/SearchMentors'
 import Discussions from './components/dashboard/Discussions'
 import DiscussionForum from './components/dashboard/DiscussionForum'
+import PublicPostsPage from './pages/PublicPostsPage'
+import StudentAlumniRegistrationPage from './pages/StudentAlumniRegistrationPage.jsx'
+
 function App() {
 
   return (
@@ -60,7 +63,7 @@ function App() {
                 <Route path='/mentor/dashboard/profile' element={<Profile />} />
                 <Route path='/mentor/dashboard/mentors' element={<Mentors />} />
                 <Route path='/mentor/dashboard/goals' element={<Goals />} />
-
+                
               </Route>
 
               {/* Website Layout */}
@@ -72,6 +75,8 @@ function App() {
                 <Route path='/reset-password' element={<ResetPassword />} />
                 <Route path='/leaderboard' element={<Leaderboard />} />
                 <Route path='/goals' element={<GoalsPage />} />
+                <Route path='/public-posts' element={<PublicPostsPage />} />
+                <Route path='/alumni-registration' element={<StudentAlumniRegistrationPage type="alumni" />} />
 
                 {/* Mentors Routes */}
                 <Route path='/mentor/login' element={<LoginPage type='mentor' />} />
