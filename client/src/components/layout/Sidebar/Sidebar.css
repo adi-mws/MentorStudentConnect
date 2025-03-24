@@ -33,7 +33,7 @@
             display: inline-block;
             background: rgba(134, 24, 224, 0.247);
             font-weight: 500;
-            color: rgb(134, 24, 224);
+            color: var(--primary-color);
 
         }
 
@@ -76,7 +76,7 @@
     .active {
 
         color: rgb(255, 255, 255) !important;
-        background: rgb(134, 24, 224);
+        background: var(--primary-color);
 
     }
 

@@ -126,6 +126,7 @@ export default function ResetPassword({ type = "student" }) {
 
           <div className="text-center mt-3">
             <Link
+            style={{color: 'var(--primary-color)'}}
               to={`/login`}
               className="text-decoration-none d-block mb-2"
             >

@@ -17,6 +17,7 @@ import Goals from './components/dashboard/Goals'
 import LoginPage from './pages/LoginPage'
 import Dashboard from './layouts/Dashboard'
 import MentoringGroup from './components/dashboard/MentoringGroup'
+import SearchMentors from './components/dashboard/SearchMentors'
 function App() {
 
   return (
@@ -30,6 +31,7 @@ function App() {
                 <Route path='/dashboard' context={{ locationState: 'Dashboard' }} element={<DashboardMainPage />} />
                 <Route path='/dashboard/profile' element={<Profile />} />
                 <Route path='/dashboard/mentors' element={<Mentors />} />
+                <Route path='/dashboard/search-mentors' element={<SearchMentors />} />
                 <Route path='/dashboard/goals' element={<Goals />} />
 
               </Route>

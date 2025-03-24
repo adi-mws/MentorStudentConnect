@@ -94,7 +94,7 @@ export default function ForgotPassword({ type = "student" }) {
           </form>
 
           <div className="text-center mt-3">
-            <a
+            <a style={{color: 'var(--primary-color)'}}
               href={`/login`}
               className="text-decoration-none d-block mb-2"
             >

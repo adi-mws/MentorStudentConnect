@@ -111,7 +111,7 @@ export default function LoginPage({ type = "student" }) {
         </form>
 
         <div className="text-center mt-3">
-          <a href={`/forgot-password`} className="text-decoration-none d-block mb-2">
+          <a href={`/forgot-password`} style={{color: 'var(--primary-color)'}} className="text-decoration-none d-block mb-2">
             Forgot Password?
           </a>
         </div>

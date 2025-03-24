@@ -96,7 +96,9 @@ export default function Sidebar({ type }) {
     '/dashboard/profile': 'profile',
     '/dashboard/goals': 'goals',
     '/dashboard/mentors': 'mentors',
+    '/dashboard/search-mentors': 'mentors',
     '/dashboard/students': 'students',
+
     '/dashboard/messages': 'messages',
     '/admin/dashboard': 'dashboard',
     '/admin/dashboard/students': 'students',

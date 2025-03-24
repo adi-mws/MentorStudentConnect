@@ -3,4 +3,9 @@
     height: 60px;
     box-shadow: 0 0 3px 0 dimgray;
 
+    .btn-primary {
+        background: var(--primary-color) !important;
+        border-color: var(--border-color) !important;
+    }
+
 }
