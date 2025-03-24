@@ -1,0 +1,68 @@
+.Sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+.Sidebar {
+    /* position: fixed;
+    top: 0;
+    left: 0; */
+    height: 100%;
+    background: white;
+    box-shadow: 0 0 2px 0 gray;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    .sidebar-category.head {
+        background: rgb(7, 60, 110);
+        height: 200px;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+
+        .greeting {
+            font-size: .9em;
+            font-weight: 300;
+        }
+
+        .tag {
+            border-radius: 30px;
+            padding: .8em 3em;
+            font-size: .9em;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.329);
+            color: white;
+        }
+
+    }
+
+    .sidebar-category {
+        width: auto;
+        display: block;
+        padding: 0;
+        list-style: none;
+        padding: 1em;
+        flex-direction: column;
+
+        h3 {
+            font-size: 1.3em;
+        }
+
+        li {
+            width: auto;
+            display: block;
+
+
+            a {
+                text-decoration: none;
+                color: black;
+
+                display: block;
+                width: auto;
+                height: auto;
+                padding: .8em 7em .8em 1em;
+            }
+        }
+    }
+
+}

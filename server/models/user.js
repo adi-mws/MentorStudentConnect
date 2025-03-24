@@ -1,33 +1,21 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        lowercase: true,
-    },
-    password: {
-        type: String,
-        required: true,
-        minlength: 8,
-    },
+    name: { type: String, required: true },
+    email: { type: String, unique: true, required: true },
+    password: { type: String, required: true },
+
+    profileId: { type: mongoose.Schema.Types.ObjectId, refPath: 'profileModel', required: true },
+    profileModel: { type: String, enum: ['StudentProfile', 'AlumniProfile', 'MentorProfile'], required: true },
+
     role: {
         type: String,
-        enum: ["mentor", "student", "admin"],
-        default: "student",
+        enum: ['student', 'alumni', 'mentor'],
+        default: 'student'
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    }
-});
 
-const User = mongoose.model("User", userSchema);
+    isActive: { type: Boolean, default: true }},
+    { timestamps: true });
 
-export default User;
+const User = mongoose.model('User', userSchema);
+module.exports = User;

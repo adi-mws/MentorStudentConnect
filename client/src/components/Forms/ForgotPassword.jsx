@@ -95,7 +95,7 @@ export default function ForgotPassword({ type = "student" }) {
 
           <div className="text-center mt-3">
             <a
-              href={`/login/${type}`}
+              href={`/login`}
               className="text-decoration-none d-block mb-2"
             >
               Back to Login

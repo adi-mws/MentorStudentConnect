@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function ResetPassword({ type = "student" }) {
   const { token } = useParams();
@@ -125,12 +125,12 @@ export default function ResetPassword({ type = "student" }) {
           </form>
 
           <div className="text-center mt-3">
-            <a
-              href={`/login/${type}`}
+            <Link
+              to={`/login`}
               className="text-decoration-none d-block mb-2"
             >
               Back to Login
-            </a>
+            </Link>
           </div>
         </div>
       </div>

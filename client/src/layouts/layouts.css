@@ -1,0 +1,22 @@
+.dashboard-container {
+    width: 100%; 
+    display: grid; 
+    grid-template: 100% / 250px calc(100% - 250px);
+    overflow: hidden !important;
+    max-height: 100vh;
+    .dashboard-content {
+        display: grid; 
+        grid-template: 60px calc(100% - 60px) / 100%; 
+        overflow: hidden !important;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        .dashboard-pages {
+            overflow-y: scroll; 
+        }
+    }
+    
+}
+
+.dashboard-container > div, .dashboard-content > div{
+    width: 100%; 
+    height: 100%; 
+}

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-export default function LoginPage({ type = "Student" }) {
+export default function LoginPage({ type = "student" }) {
   const {
     register,
     handleSubmit,
@@ -111,7 +111,7 @@ export default function LoginPage({ type = "Student" }) {
         </form>
 
         <div className="text-center mt-3">
-          <a href={`/forgot-password/${type}`} className="text-decoration-none d-block mb-2">
+          <a href={`/forgot-password`} className="text-decoration-none d-block mb-2">
             Forgot Password?
           </a>
         </div>
