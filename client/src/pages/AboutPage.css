@@ -1,0 +1,23 @@
+.AboutPage{
+    display: flex;
+    flex-direction: column;
+    h1{
+        margin: 2rem;
+        color: var(--primary-color);
+    }
+    .Feature{
+        display: flex;
+        flex-direction: column;
+        background-color: #f2f2f2;
+        border-radius: 10px;
+        margin: 2rem;
+        padding: 2rem;
+        gap: 1rem;
+        -webkit-box-shadow: 3px 5px 5px 0px var(--primary-color);
+        -moz-box-shadow: 3px 5px 5px 0px var(--primary-color);
+        box-shadow: 3px 5px 5px 0px var(--primary-color);
+        h3{
+            color: var(--primary-color);
+        }
+    }
+}
