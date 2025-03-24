@@ -22,7 +22,7 @@ import Discussions from './components/dashboard/Discussions'
 import DiscussionForum from './components/dashboard/DiscussionForum'
 import PublicPostsPage from './pages/PublicPostsPage'
 import StudentAlumniRegistrationPage from './pages/StudentAlumniRegistrationPage.jsx'
-
+//aditya
 function App() {
 
   return (
