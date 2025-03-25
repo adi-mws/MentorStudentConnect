@@ -45,19 +45,19 @@ function AppRoutes() {
         <Route path='/dashboard/webinars/:id' element={<Discussions />} />
         <Route path='/dashboard/discussions/:id' element={<DiscussionForum />} />
       </Route>
-              {/* Student and Alumni Dashboard */}
-              <Route path='/dashboard' element={<Dashboard />}>
-                <Route path='/dashboard' context={{ locationState: 'Dashboard' }} element={<DashboardMainPage />} />
-                <Route path='/dashboard/profile' element={<Profile />} />
-                <Route path='/dashboard/mentors' element={<Mentors />} />
-                <Route path='/dashboard/search-mentors' element={<SearchMentors />} />
-                <Route path='/dashboard/goals' element={<Goals />} />
-                <Route path='/dashboard/discussions' element={<Discussions />} />
-                <Route path='/dashboard/webinars' element={<Discussions />} />
-                <Route path='/dashboard/webinars/:id' element={<Discussions />} />
-                <Route path='/dashboard/discussions/:id' element={<DiscussionForum />} />
-                <Route path='/dashboard/posts' element={<CheckPosts />} />
-              </Route>
+      {/* Student and Alumni Dashboard */}
+      <Route path='/dashboard' element={<Dashboard />}>
+        <Route path='/dashboard' context={{ locationState: 'Dashboard' }} element={<DashboardMainPage />} />
+        <Route path='/dashboard/profile' element={<Profile />} />
+        <Route path='/dashboard/mentors' element={<Mentors />} />
+        <Route path='/dashboard/search-mentors' element={<SearchMentors />} />
+        <Route path='/dashboard/goals' element={<Goals />} />
+        <Route path='/dashboard/discussions' element={<Discussions />} />
+        <Route path='/dashboard/webinars' element={<Discussions />} />
+        <Route path='/dashboard/webinars/:id' element={<Discussions />} />
+        <Route path='/dashboard/discussions/:id' element={<DiscussionForum />} />
+        <Route path='/dashboard/posts' element={<CheckPosts />} />
+      </Route>
 
 
       {/* Admin  Dashboard  */}
@@ -79,16 +79,16 @@ function AppRoutes() {
         <Route path='/mentor/dashboard/goals' element={<Goals />} />
 
       </Route>
-              {/* Mentors Layout */}
-              <Route path='/mentor/dashboard' element={<Dashboard type='mentor' />}>
-                <Route index element={<DashboardMainPage />} />
-                <Route path='/mentor/dashboard/mentoring-group' element={<MentoringGroup />} />
-                <Route path='/mentor/dashboard/profile' element={<Profile />} />
-                <Route path='/mentor/dashboard/mentors' element={<Mentors />} />
-                <Route path='/mentor/dashboard/goals' element={<Goals />} />
-                <Route path='/mentor/dashboard/posts' element={<CheckPosts />} />
-                
-              </Route>
+      {/* Mentors Layout */}
+      <Route path='/mentor/dashboard' element={<Dashboard type='mentor' />}>
+        <Route index element={<DashboardMainPage />} />
+        <Route path='/mentor/dashboard/mentoring-group' element={<MentoringGroup />} />
+        <Route path='/mentor/dashboard/profile' element={<Profile />} />
+        <Route path='/mentor/dashboard/mentors' element={<Mentors />} />
+        <Route path='/mentor/dashboard/goals' element={<Goals />} />
+        <Route path='/mentor/dashboard/posts' element={<CheckPosts />} />
+
+      </Route>
 
       {/* Website Layout */}
       <Route path='/' element={<MainLayout />}>
@@ -102,49 +102,47 @@ function AppRoutes() {
         <Route path='/goals' element={<GoalsPage />} />
         <Route path='/public-posts' element={<PublicPostsPage />} />
         <Route path='/alumni-registration' element={<StudentAlumniRegistrationPage type="alumni" />} />
-
-        {/* Alumni Routes */}
-        <Route path='/alumni/registration' element={<StudentAlumniRegistrationPage />} />
-              {/* Website Layout */}
-              <Route path='/' element={<MainLayout />}>
-                <Route path='/' context={{ locationState: "home" }} element={<HomePage />} />
-                <Route path='/about' element={<AboutPage />} />
-                <Route path='/login' element={<LoginPage />} />
-                <Route path='/forgot-password' element={<ForgotPassword />} />
-                <Route path='/reset-password' element={<ResetPassword />} />
-                <Route path='/leaderboard' element={<Leaderboard />} />
-                <Route path='/goals' element={<Goals />} />
-                <Route path='/public-posts' element={<PublicPostsPage />} />
-                <Route path='/alumni-registration' element={<StudentAlumniRegistrationPage type="alumni" />} />
-
-        {/* Mentors Routes */}
-        <Route path='/mentor/login' element={<LoginPage type='mentor' />} />
-
-        {/* Admin Routes */}
-        <Route path='/admin/login' element={<LoginPage type='admin' />} />
-        <Route path='/admin/registration' element={<AdminRegistration />} />
-
-
       </Route>
+      {/* Alumni Routes */}
+      <Route path='/alumni/registration' element={<StudentAlumniRegistrationPage />} />
+      {/* Website Layout */}
+      <Route path='/' element={<MainLayout />}>
+        <Route path='/' context={{ locationState: "home" }} element={<HomePage />} />
+        <Route path='/about' element={<AboutPage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
+        <Route path='/leaderboard' element={<Leaderboard />} />
+        <Route path='/goals' element={<Goals />} />
+        <Route path='/public-posts' element={<PublicPostsPage />} />
+        <Route path='/alumni-registration' element={<StudentAlumniRegistrationPage type="alumni" />} />
+      </Route>
+      {/* Mentors Routes */}
+      <Route path='/mentor/login' element={<LoginPage type='mentor' />} />
+
+      {/* Admin Routes */}
+      <Route path='/admin/login' element={<LoginPage type='admin' />} />
+      <Route path='/admin/registration' element={<AdminRegistration />} />
+
     </Routes>
   )
 }
 
-function App() {
+  function App() {
 
-  return (
-    <>
-      <AuthProvider>
-        <NotificationProvider>
-          <Router>
+    return (
+      <>
+        <AuthProvider>
+          <NotificationProvider>
+            <Router>
 
-            <AppRoutes />
-          </Router >
+              <AppRoutes />
+            </Router >
 
-        </NotificationProvider>
-      </AuthProvider>
-    </>
-  )
-}
+          </NotificationProvider>
+        </AuthProvider>
+      </>
+    )
+  }
 
-export default App
+  export default App;
