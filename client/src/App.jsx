@@ -6,7 +6,6 @@ import { AuthProvider, useAuth } from './contexts/AuthContext'
 import MainLayout from './layouts/MainLayout'
 import AboutPage from './pages/AboutPage'
 import Leaderboard from './pages/Leaderboard'
-import GoalsPage from './components/GoalsSection/GoalsPage'
 import ForgotPassword from './components/forms/ForgotPassword'
 import ResetPassword from './components/forms/ResetPassword'
 import DashboardMainPage from './components/dashboard/MainPage/MainPage'
@@ -22,6 +21,8 @@ import Discussions from './components/dashboard/Discussions'
 import DiscussionForum from './components/dashboard/DiscussionForum'
 import PublicPostsPage from './pages/PublicPostsPage'
 import StudentAlumniRegistrationPage from './pages/StudentAlumniRegistrationPage.jsx'
+import CheckPosts from './components/dashboard/CheckPosts.jsx'
+
 //aditya
 import { Navigate } from 'react-router-dom'
 import AdminRegistration from './pages/AdminRegistration.jsx'
@@ -44,6 +45,19 @@ function AppRoutes() {
         <Route path='/dashboard/webinars/:id' element={<Discussions />} />
         <Route path='/dashboard/discussions/:id' element={<DiscussionForum />} />
       </Route>
+              {/* Student and Alumni Dashboard */}
+              <Route path='/dashboard' element={<Dashboard />}>
+                <Route path='/dashboard' context={{ locationState: 'Dashboard' }} element={<DashboardMainPage />} />
+                <Route path='/dashboard/profile' element={<Profile />} />
+                <Route path='/dashboard/mentors' element={<Mentors />} />
+                <Route path='/dashboard/search-mentors' element={<SearchMentors />} />
+                <Route path='/dashboard/goals' element={<Goals />} />
+                <Route path='/dashboard/discussions' element={<Discussions />} />
+                <Route path='/dashboard/webinars' element={<Discussions />} />
+                <Route path='/dashboard/webinars/:id' element={<Discussions />} />
+                <Route path='/dashboard/discussions/:id' element={<DiscussionForum />} />
+                <Route path='/dashboard/posts' element={<CheckPosts />} />
+              </Route>
 
 
       {/* Admin  Dashboard  */}
@@ -65,6 +79,16 @@ function AppRoutes() {
         <Route path='/mentor/dashboard/goals' element={<Goals />} />
 
       </Route>
+              {/* Mentors Layout */}
+              <Route path='/mentor/dashboard' element={<Dashboard type='mentor' />}>
+                <Route index element={<DashboardMainPage />} />
+                <Route path='/mentor/dashboard/mentoring-group' element={<MentoringGroup />} />
+                <Route path='/mentor/dashboard/profile' element={<Profile />} />
+                <Route path='/mentor/dashboard/mentors' element={<Mentors />} />
+                <Route path='/mentor/dashboard/goals' element={<Goals />} />
+                <Route path='/mentor/dashboard/posts' element={<CheckPosts />} />
+                
+              </Route>
 
       {/* Website Layout */}
       <Route path='/' element={<MainLayout />}>
@@ -81,6 +105,17 @@ function AppRoutes() {
 
         {/* Alumni Routes */}
         <Route path='/alumni/registration' element={<StudentAlumniRegistrationPage />} />
+              {/* Website Layout */}
+              <Route path='/' element={<MainLayout />}>
+                <Route path='/' context={{ locationState: "home" }} element={<HomePage />} />
+                <Route path='/about' element={<AboutPage />} />
+                <Route path='/login' element={<LoginPage />} />
+                <Route path='/forgot-password' element={<ForgotPassword />} />
+                <Route path='/reset-password' element={<ResetPassword />} />
+                <Route path='/leaderboard' element={<Leaderboard />} />
+                <Route path='/goals' element={<Goals />} />
+                <Route path='/public-posts' element={<PublicPostsPage />} />
+                <Route path='/alumni-registration' element={<StudentAlumniRegistrationPage type="alumni" />} />
 
         {/* Mentors Routes */}
         <Route path='/mentor/login' element={<LoginPage type='mentor' />} />
