@@ -9,7 +9,7 @@ export default function Dashboard({ type = 'student' }) {
             <div className="dashboard-container">
                 <Sidebar type={type}/>
                 <div className="dashboard-content">
-                    <DashboardHeader />
+                    <DashboardHeader type={type}/>
 
                     <div className="dashboard-pages">
                         <Outlet />

@@ -4,16 +4,18 @@ import { useAuth } from '../../contexts/AuthContext';
 
 
 export default function Header({ locationState = '' }) {
-    const { logout } = useAuth();
+    const { logout, user } = useAuth();
     useEffect(() => {
     }, [locationState]);
+
     const navgiate = useNavigate();
     const handleLogout = () => {
         logout();
     }
 
     const handleDashboard = () => {
-        
+        const dashboardPath = user.role === 'mentor' ? '/mentor/dashboard' : user.role === 'admin' ? '/admin/dashboard' : '/dashboard';
+        navgiate(dashboardPath)
     }
     return (
         <div className='Header'>
@@ -33,19 +35,22 @@ export default function Header({ locationState = '' }) {
                             </li>
 
                         </ul>
-                        <div className="auth-options-container d-flex flex-column flex-md-row">
-                            <button className="btn px-5 flex-grow-1 mx-2" onClick={() => { navgiate('/mentor/login') }}>Mentor Login</button>
-                            <button className="btn btn-primary px-5 flex-grow-1" onClick={() => {navgiate('/login')}}>Student Login</button>
-                        </div>
-                        {/* <div className="auth-options-container d-flex flex-column flex-md-row">
-                            <Link className="btn px-5 flex-grow-1 mx-2" onClick={handleDashboard}>Dashboard</Link>
-                            <Link className="btn px-5 flex-grow-1 text-danger" style={{ background: '#ffd9d1' }} onClick={handleLogout}>Logout </Link>
-                        </div> */}
 
-              
+                        {user ?
+                            <div className="auth-options-container d-flex flex-column flex-md-row">
+                                <button className="btn px-5 flex-grow-1 mx-2" onClick={handleDashboard}>Dashboard</button>
+                                <button className="btn px-5 flex-grow-1 text-danger" style={{ background: '#ffd9d1' }} onClick={handleLogout}>Logout </button>
+                            </div>
+                            :
+                            <div className="auth-options-container d-flex flex-column flex-md-row">
+                                <button className="btn px-5 flex-grow-1 mx-2" onClick={() => { navgiate('/mentor/login') }}>Mentor Login</button>
+                                <button className="btn btn-primary px-5 flex-grow-1" onClick={() => { navgiate('/login') }}>Student Login</button>
+                            </div>
+                        }
+
                     </div>
                 </div>
-            </nav>
-        </div>
+            </nav >
+        </div >
     )
 }

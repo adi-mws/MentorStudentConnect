@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import './Sidebar.css'
 import { Link, useLocation } from 'react-router-dom'
-
+import { useAuth } from '../../../contexts/AuthContext'
 
 
 
 const StudentSidebarComponents = ({ locationState }) => {
+
   return (
     <>
       <ul className='sidebar-category '>
@@ -73,8 +74,8 @@ const AdminSidebarComponents = ({ locationState }) => {
 
       <ul className='sidebar-category '>
         <h3>Roles</h3>
-        <li ><Link to="/admin/dashboard/students" className={`${locationState === 'students' ? 'active' : ''} sidebar-item`}><i class="fa-solid fa-graduation-cap"></i> Students</Link></li>
-        <li ><Link to="/admin/dashboard/alumni" className={`${locationState === 'alumni' ? 'active' : ''} sidebar-item`}><i class="fa-solid fa-users"></i> Alumni</Link></li>
+        <li ><Link to="/admin/dashboard/students" className={`${locationState === 'students' ? 'active' : ''} sidebar-item`}><i className="fa-solid fa-graduation-cap"></i> Students</Link></li>
+        <li ><Link to="/admin/dashboard/alumni" className={`${locationState === 'alumni' ? 'active' : ''} sidebar-item`}><i className="fa-solid fa-users"></i> Alumni</Link></li>
         <li ><Link to="/admin/dashboard/mentors" className={`${locationState === 'mentors' ? 'active' : ''} sidebar-item`}><i className="fa-solid fa-user-tie"></i> Mentors</Link></li>
       </ul>
 
@@ -92,6 +93,7 @@ const AdminSidebarComponents = ({ locationState }) => {
 export default function Sidebar({ type }) {
   const location = useLocation();
   const [locationState, setLocationState] = useState('');
+  const { user } = useAuth();
 
   const routeTitles = {
     '/dashboard': 'dashboard',
@@ -123,7 +125,7 @@ export default function Sidebar({ type }) {
     <div className='Sidebar'>
       <ul className="sidebar-category head">
         <h5>Student Mentorship</h5>
-        <p className="greeting">Welcome, Aditya Raj</p>
+        <p className="greeting">Welcome, {user?.name}</p>
         <span className="tag">{type.toString().charAt(0).toUpperCase() + type.slice(1)}</span>
       </ul>
       {type === 'student' ?
