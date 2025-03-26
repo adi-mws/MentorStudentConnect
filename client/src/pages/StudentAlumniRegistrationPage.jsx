@@ -1,10 +1,14 @@
+import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNotification } from "../contexts/NotificationContext";
+import { useNavigate } from "react-router-dom";
 
 export default function RegistrationPage({ type = "student" }) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
@@ -20,29 +24,62 @@ export default function RegistrationPage({ type = "student" }) {
       })
     },
   });
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    console.log("Form submitted:", data);
-    alert("Form Submitted");
+  const { showNotification } = useNotification();
+
+
+  const onSubmit = async (data) => {
+    data.role = type;
+    console.log(data)
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/users/student/create`, data);
+      if (response.status == 201) {
+        showNotification('success', response.data.message);
+        reset();
+        navigate(`${type === 'alumni' ? 'alumni' : ''}/login`)
+
+
+      } else {
+        showNotification('error', response.data.message)
+      }
+    } catch (e) {
+      console.error(e);
+      showNotification('error', e.response.data.message || "Error");
+    }
   };
 
   return (
     <div>
-      <div className="d-flex justify-content-center align-items-center vh-90 bg-light" style={{marginTop:"5rem"}}>
+      <div className="d-flex justify-content-center align-items-center vh-90 mt-5">
         <div className="card p-4 shadow-lg" style={{ width: "50rem", borderRadius: "10px" }}>
           <h3 className="text-center mb-4">
             {type.charAt(0).toUpperCase() + type.slice(1)} Registration
           </h3>
-          <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate className="">
             <div className="row">
               <div className="col-md-6">
+                <div className="mb-3">
+                  <label htmlFor="username" className="form-label">Username</label>
+                  <input
+                    type="text"
+                    id="username"
+                    className={`form-control ${errors.username ? "is-invalid" : ""}`}
+                    placeholder="Enter Username"
+                    {...register("username", {
+                      required: "Username is required",
+                      minLength: { value: 2, message: "Username must be at least 2 characters" },
+                    })}
+                  />
+                  {errors.username && <div className="invalid-feedback">{errors.username.message}</div>}
+                </div>
                 <div className="mb-3">
                   <label htmlFor="name" className="form-label">Name</label>
                   <input
                     type="text"
                     id="name"
                     className={`form-control ${errors.name ? "is-invalid" : ""}`}
-                    placeholder="Enter your name"
+                    placeholder="Enter Name"
                     {...register("name", {
                       required: "Name is required",
                       minLength: { value: 2, message: "Name must be at least 2 characters" },
@@ -50,6 +87,8 @@ export default function RegistrationPage({ type = "student" }) {
                   />
                   {errors.name && <div className="invalid-feedback">{errors.name.message}</div>}
                 </div>
+
+
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">Email</label>
                   <input
@@ -68,35 +107,20 @@ export default function RegistrationPage({ type = "student" }) {
                   {errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="department" className="form-label">Department</label>
+                  <label htmlFor="password" className="form-label">Password</label>
                   <input
-                    type="text"
-                    id="department"
-                    className={`form-control ${errors.department ? "is-invalid" : ""}`}
-                    placeholder="Enter your department"
-                    {...register("department", {
-                      required: "Department is required",
+                    type="password"
+                    id="password"
+                    className={`form-control ${errors.password ? "is-invalid" : ""}`}
+                    placeholder="Enter Password"
+                    {...register("password", {
+                      required: "Password is required",
+                      minLength: { value: 6, message: "Password must be at least 6 characters" },
                     })}
                   />
-                  {errors.department && <div className="invalid-feedback">{errors.department.message}</div>}
+                  {errors.password && <div className="invalid-feedback">{errors.passoword.message}</div>}
                 </div>
-                <div className="mb-3">
-                  <label htmlFor="registrationNumber" className="form-label">Registration Number</label>
-                  <input
-                    type="text"
-                    id="registrationNumber"
-                    className={`form-control ${errors.registrationNumber ? "is-invalid" : ""}`}
-                    placeholder="Enter registration number"
-                    {...register("registrationNumber", {
-                      required: "Registration number is required",
-                      pattern: {
-                        value: /^[A-Za-z0-9]+$/,
-                        message: "Only alphanumeric characters allowed",
-                      },
-                    })}
-                  />
-                  {errors.registrationNumber && <div className="invalid-feedback">{errors.registrationNumber.message}</div>}
-                </div>
+
               </div>
 
               <div className="col-md-6">
@@ -114,26 +138,41 @@ export default function RegistrationPage({ type = "student" }) {
                     })}
                   />
                   {errors.joiningYear && <div className="invalid-feedback">{errors.joiningYear.message}</div>}
+
+                  <div className="mb-3">
+                    <label htmlFor="department" className="form-label">Department</label>
+                    <input
+                      type="text"
+                      id="department"
+                      className={`form-control ${errors.department ? "is-invalid" : ""}`}
+                      placeholder="Enter your department"
+                      {...register("department", {
+                        required: "Department is required",
+                      })}
+                    />
+                    {errors.department && <div className="invalid-feedback">{errors.department.message}</div>}
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="registrationNumber" className="form-label">Registration Number</label>
+                    <input
+                      type="text"
+                      id="registrationNumber"
+                      className={`form-control ${errors.registrationNumber ? "is-invalid" : ""}`}
+                      placeholder="Enter registration number"
+                      {...register("registrationNumber", {
+                        required: "Registration number is required",
+                        pattern: {
+                          value: /^[A-Za-z0-9]+$/,
+                          message: "Only alphanumeric characters allowed",
+                        },
+                      })}
+                    />
+                    {errors.registrationNumber && <div className="invalid-feedback">{errors.registrationNumber.message}</div>}
+                  </div>
+
                 </div>
 
-                <div className="mb-3">
-                  <label htmlFor="passingYear" className="form-label">Passing Year</label>
-                  <input
-                    type="number"
-                    id="passingYear"
-                    className={`form-control ${errors.passingYear ? "is-invalid" : ""}`}
-                    placeholder="Enter passing year"
-                    {...register("passingYear", {
-                      required: "Passing year is required",
-                      min: { value: 1900, message: "Year too early" },
-                      max: { 
-                        value: type === "student" ? new Date().getFullYear() + 10 : new Date().getFullYear(), 
-                        message: "Year too far in future" 
-                      },
-                    })}
-                  />
-                  {errors.passingYear && <div className="invalid-feedback">{errors.passingYear.message}</div>}
-                </div>
+
 
                 {type === "alumni" && (
                   <>
@@ -162,9 +201,7 @@ export default function RegistrationPage({ type = "student" }) {
                         id="organisation"
                         className={`form-control ${errors.organisation ? "is-invalid" : ""}`}
                         placeholder="Enter organisation name"
-                        {...register("organisation", {
-                          required: "Organisation is required",
-                        })}
+                        {...register("organisation")}
                       />
                       {errors.organisation && <div className="invalid-feedback">{errors.organisation.message}</div>}
                     </div>

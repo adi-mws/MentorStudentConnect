@@ -2,6 +2,10 @@ import express from 'express';
 import connectDB from './db/connectDB.js'
 import dotenv from 'dotenv';
 import http from 'http'
+import userRoutes from './routes/userRoutes.js'
+import alumniRoutes from './routes/alumniRoutes.js'
+import studentRoutes from './routes/studentRoutes.js'
+import mentoringGroup from './routes/mentoringGroupRoutes.js'
 // import adminRoutes from './routes/adminRoutes.js';
 import cors from 'cors';
 // import chatRoutes from './routes/chatRoutes.js';
@@ -54,8 +58,8 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 connectDB();
 
 // Routes for admin dashboard
-// app.use('/api/admin', adminRoutes);
-// app.use('/api/chats', chatRoutes);
+app.use('/api/users', userRoutes);
+// app.use('/api/chats', chatRoutes); 
 
 server.listen(PORT, () => {
     app.get('/', (req, res) => {

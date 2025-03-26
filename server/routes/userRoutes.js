@@ -3,11 +3,15 @@ import authenticateJWT from '../middlewares/auth.js';
 const router = express.Router();
 
 
-import { createUser, loginUser, logoutUser, verifyUserDetails } from '../controllers/adminController.js';
+import { createStudent, loginUser, createAdmin, verifyUserDetails, getAllStudents } from '../controllers/userController.js';
 
-router.post('/create-admin', registerAdmin);
-router.post('/login-admin', loginAdmin);
-router.post('/logout-admin', verifyUserDetails);
-router.post('/logout-admin', authenticateJWT, logoutAdmin)
+router.post('/student/create', createStudent);
+router.post('/alumni/create', createStudent);
+router.post('/admin/create', createAdmin);
+router.post('/login', loginUser);
+router.post('/verify-user', verifyUserDetails);
+
+
+router.get("/student/get-all", getAllStudents);
 
 export default router;

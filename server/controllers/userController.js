@@ -1,30 +1,29 @@
-import User from '../models/user.js';
-import bcrypt, { hashSync } from 'bcrypt';
+import User from '../models/user.js'
+import bcrypt, { hashSync } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Worker } from 'worker_threads';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import Student from '../models/student.js';
 
 // Get the current directory dynamically
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Register user
-export const createUser = async (req, res) => {
-    const { username, password, email, role, name } = req.body;
-
+export const createStudent = async (req, res) => {
+    const { username, password, email, role, name, department, joiningYear, registrationNumber } = req.body;
     try {
-        const userExists = await user.findOne({ username, role, email });
+        const userExists = await User.findOne({ username, role, email });
         if (userExists) {
             return res.status(400).json({ message: "user already exists" });
         }
 
-    
-        const user = await User.create({ username: username, role: role, name: name, password: hashSync(password, 10) });
+        const user = await User.create({ username: username, name: name, email: email, password: hashSync(password, 10), role: role });
 
-        
-        res.status(200).json({
-            message: "user registered successfully",
+        const student = await Student.create({ department: department, joiningYear: joiningYear, registrationNumber: registrationNumber, _id: user._id })
+        res.status(201).json({
+            message: "Student registered successfully",
             user: { id: user._id, email: user.email, }
         });
 
@@ -34,15 +33,98 @@ export const createUser = async (req, res) => {
 };
 
 
+export const createAlumni = async (req, res) => {
+    const { username, password, email, role, name, department, joiningYear, registrationNumber } = req.body;
+    try {
+        const userExists = await User.findOne({ username, role, email });
+        if (userExists) {
+            return res.status(400).json({ message: "user already exists" });
+        }
+
+        const user = await User.create({ username: username, name: name, email: email, password: hashSync(password, 10), role: role });
+
+        const student = await Student.create({ department: department, joiningYear: joiningYear, registrationNumber: registrationNumber, _id: user._id })
+        res.status(201).json({
+            message: "Student registered successfully",
+            user: { id: user._id, email: user.email, }
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: 'Error registering user', error });
+    }
+};
+
+
+export const createAdmin = async (req, res) => {
+    const { username, email, role, password, name } = req.body;
+    try {
+        const userExists = await User.findOne({ username, email, role });
+        if (userExists) {
+            return res.status(400).json({ message: "user already exists" });
+        }
+        const user = await User.create({ username: username, name: name, email: email, password: hashSync(password, 10), role: role });
+
+        res.status(201).json({
+            message: "Admin registered successfully",
+            user: { id: user._id, email: user.email, }
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: 'Error registering user', error });
+    }
+}
+
+
+export const getAllStudents = async (req, res) => {
+    try {
+        const users = await User.find({ role: 'student' });
+        if (!users) {
+            return res.status(404).json({ message: 'Users not found' });
+        }
+        // console.log(users);
+        return res.status(200).json({ message: 'All Students sent successfully', students: users });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'All Students sent successfully!' });
+    }
+}
+
+
+export const getAllAlumni = async (req, res) => {
+    try {
+        const users = await User.find({ role: 'alumni' });
+        if (!users) {
+            return res.status(404).json({ message: 'Users not found' });
+        }
+        return res.status(200).json({ message: 'All Students sent successfully', alumni: users });
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+
+export const getAllMentors = async (req, res) => {
+    try {
+        const users = await User.findAll({ role: 'mentor' });
+        if (!users) {
+            return res.status(404).json({ message: 'Users not found' });
+        }
+        return res.status(200).json({ message: 'All Mentors sent successfully', mentors: users });
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+
 // Login user
 
-export const loginuser = async (req, res) => {
+export const loginUser = async (req, res) => {
     const { username, password, role } = req.body;
     // console.log(email, password); (DEBUGGER)
 
     try {
         // Await the result of the findOne query
-        const user = await user.findOne({ username, role });
+        const user = await User.findOne({ username, role });
 
         if (!user) {
             return res.status(401).json({ message: 'Invalid Credentials' });
@@ -61,7 +143,7 @@ export const loginuser = async (req, res) => {
         // Generate a token
         const token = generateToken(user._id);
 
-        res.status(200).json({ message: "user logged in successfully!", token, user: { username: user.username, id: user._id } });
+        res.status(200).json({ message: "user logged in successfully!", token, user: { username: user.username, name: user.name, id: user._id, role: user.role } });
     } catch (error) {
         console.error('Error during login:', error); // Log the error for debugging
         res.status(500).json({ message: 'Error logging in user' });

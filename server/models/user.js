@@ -1,12 +1,25 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    email: { type: String, unique: true, required: true },
-    password: { type: String, required: true },
 
-    profileId: { type: mongoose.Schema.Types.ObjectId, refPath: 'profileModel', required: false },
-    profileModel: { type: String, enum: ['StudentProfile', 'AlumniProfile', 'MentorProfile'], required: true },
+    name: { type: String, required: true, unique: false},
+    username: { type: String, required: true, unique: true },
+
+    email: { type: String, unique: true, required: true },
+    password: {
+        type: String, required: true
+    },
+
+    profileId: {
+        type: mongoose.Schema.Types.ObjectId,
+        refPath: 'profileModel',
+        required: false
+    },
+    profileModel: {
+        type: String,
+        enum: ['StudentProfile', 'AlumniProfile', 'MentorProfile'],
+        required: false
+    },
 
     role: {
         type: String,
@@ -14,8 +27,10 @@ const userSchema = new mongoose.Schema({
         default: 'student'
     },
 
-    isActive: { type: Boolean, default: true }},
-    { timestamps: true });
+    isActive: { type: Boolean, default: true }
+},
+    { timestamps: true }
+);
 
 const User = mongoose.model('User', userSchema);
-module.exports = User;
+export default User;

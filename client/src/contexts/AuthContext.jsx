@@ -11,14 +11,14 @@ export const AuthProvider = ({ children }) => {
   // Verify token and fetch user details from the server
   const verifyTokenAndFetchUser = async (token) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/user/verify-user`, {}, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/users/verify-user`, {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       if (response.status === 200) {
         // Successful fetch
-        console.log(response.data)
+        // console.log(response.data)
         setUser(response.data);
         setError(null);
         setLoading(false);

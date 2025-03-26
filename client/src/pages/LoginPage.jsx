@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-
+import { useNotification } from "../contexts/NotificationContext";
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 export default function LoginPage({ type = "student" }) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
@@ -14,47 +17,36 @@ export default function LoginPage({ type = "student" }) {
       keepLoggedIn: false,
     },
   });
+  const { login } = useAuth();
+  const { showNotification } = useNotification();
+  const navgiate = useNavigate();
 
-  const apiClient = axios.create({
-    baseURL: "https://your-api-domain.com/",
-    timeout: 5000,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const getEndpoint = (userType) => {
-    const endpoints = {
-      student: "api/student/login",
-      alumni: "api/alumni/login",
-      mentor: "api/mentor/login",
-    };
-    return endpoints[userType] || endpoints.student;
-  };
+  const dashboardPath = type === 'mentor' ? '/mentor/dashboard' : type === 'admin' ? '/admin/dashboard' : '/dashboard';
 
   const onSubmit = async (data) => {
     try {
-      const endpoint = getEndpoint(type);
-      const response = await apiClient.post(endpoint, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/users/login`, {
         username: data.username,
         password: data.password,
-        keepLoggedIn: data.keepLoggedIn,
-        userType: type,
+        role: type,
+      }, {
+        headers: {
+          "Content-Type": 'application/json'
+        }
       });
-
-      if (response.data.token) {
-        localStorage.setItem(`${type}AuthToken`, response.data.token);
+      if (response.status === 200) {
+        const { token, user } = response.data;
+        reset();
+        login(token, user);
+        navgiate(dashboardPath)
+        showNotification('success', `${type.charAt(0).toUpperCase() + type.slice(1)} Login Successful!`);
       }
-
-      alert(`${type.charAt(0).toUpperCase() + type.slice(1)} Login Successful!`);
+      else {
+        showNotification('error', response.data.message);
+      }
     } catch (error) {
-      if (error.response) {
-        alert(`Login failed: ${error.response.data.message || "Invalid credentials"}`);
-      } else if (error.request) {
-        alert("Login failed: Unable to connect to server");
-      } else {
-        alert("Login failed: Please try again");
-      }
+      console.error(error);
+      showNotification('error', error.response.data.message || 'Error');
     }
   };
 
@@ -111,7 +103,7 @@ export default function LoginPage({ type = "student" }) {
         </form>
 
         <div className="text-center mt-3">
-          <a href={`/forgot-password`} style={{color: 'var(--primary-color)'}} className="text-decoration-none d-block mb-2">
+          <a href={`/forgot-password`} style={{ color: 'var(--primary-color)' }} className="text-decoration-none d-block mb-2">
             Forgot Password?
           </a>
         </div>
