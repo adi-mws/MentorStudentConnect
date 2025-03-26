@@ -22,6 +22,7 @@ import DiscussionForum from './components/dashboard/DiscussionForum'
 import PublicPostsPage from './pages/PublicPostsPage'
 import StudentAlumniRegistrationPage from './pages/StudentAlumniRegistrationPage.jsx'
 import CheckPosts from './components/dashboard/CheckPosts.jsx'
+import Webinars from './components/dashboard/Webinar.jsx'
 
 //aditya
 function App() {
@@ -41,7 +42,7 @@ function App() {
                 <Route path='/dashboard/search-mentors' element={<SearchMentors />} />
                 <Route path='/dashboard/goals' element={<Goals />} />
                 <Route path='/dashboard/discussions' element={<Discussions />} />
-                <Route path='/dashboard/webinars' element={<Discussions />} />
+                <Route path='/dashboard/webinars' element={<Webinars />} />
                 <Route path='/dashboard/webinars/:id' element={<Discussions />} />
                 <Route path='/dashboard/discussions/:id' element={<DiscussionForum />} />
                 <Route path='/dashboard/posts' element={<CheckPosts />} />
