@@ -99,7 +99,7 @@ function AppRoutes() {
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='/leaderboard' element={<Leaderboard />} />
-        <Route path='/goals' element={<GoalsPage />} />
+        <Route path='/goals' element={<Goals />} />
         <Route path='/public-posts' element={<PublicPostsPage />} />
         <Route path='/alumni-registration' element={<StudentAlumniRegistrationPage type="alumni" />} />
       </Route>
