@@ -77,23 +77,23 @@ function AppRoutes() {
       <Route path='/' element={<MainLayout />}>
         <Route path='/' element={<HomePage />} />
         <Route path='/about' element={<AboutPage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/registration' element={<StudentAlumniRegistrationPage />} />
+        <Route path='/login' element={user ? <Navigate to={'/'}/>: <LoginPage /> } />
+        <Route path='/registration' element={user ? <Navigate to={'/'}/>: <StudentAlumniRegistrationPage />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='/leaderboard' element={<Leaderboard />} />
         <Route path='/goals' element={<Goals />} />
         <Route path='/public-posts' element={<PublicPostsPage />} />
         <Route path='/mentors-promotion' element={<AdminMentorsAlumni />} />
-        <Route path='/alumni-registration' element={<StudentAlumniRegistrationPage type="alumni" />} />
+        <Route path='/alumni-registration' element={user ? <Navigate to={'/'}/> : <StudentAlumniRegistrationPage type="alumni" />} />
         {/* Mentors Routes */}
-        <Route path='/mentor/login' element={<LoginPage type='mentor' />} />
-        <Route path='/alumni/login' element={<LoginPage type='alumni' />} />
+        <Route path='/mentor/login' element={user ? <Navigate to={'/'}/> : <LoginPage type='mentor' />} />
+        <Route path='/alumni/login' element={user ? <Navigate to={'/'}/> : <LoginPage type='alumni' />} />
         {/* Alumni Routes */}
-        <Route path='/alumni/registration' element={<StudentAlumniRegistrationPage  type='alumni'/>} />
+        <Route path='/alumni/registration' element={user ? <Navigate to={'/'}/> : <StudentAlumniRegistrationPage  type='alumni'/>} />
         {/* Admin Routes */}
-        <Route path='/admin/login' element={<LoginPage type='admin' />} />
-        <Route path='/admin/registration' element={<AdminRegistration />} />
+        <Route path='/admin/login' element={user ? <Navigate to={'/'}/>: <LoginPage type='admin' />} />
+        <Route path='/admin/registration' element={user ? <Navigate to={'/'}/> :<AdminRegistration />} />
 
       </Route>
 
