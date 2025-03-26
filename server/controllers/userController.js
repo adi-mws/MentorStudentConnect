@@ -3,10 +3,12 @@ import bcrypt, { hashSync } from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Worker } from 'worker_threads';
 import { fileURLToPath } from 'url';
+import Alumni from '../models/alumni.js';
 import path from 'path';
 import Student from '../models/student.js';
 
-// Get the current directory dynamically
+
+//Get the current directory dynamically
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -25,6 +27,7 @@ export const createStudent = async (req, res) => {
         res.status(201).json({
             message: "Student registered successfully",
             user: { id: user._id, email: user.email, }
+
         });
 
     } catch (error) {
@@ -34,23 +37,42 @@ export const createStudent = async (req, res) => {
 
 
 export const createAlumni = async (req, res) => {
-    const { username, password, email, role, name, department, joiningYear, registrationNumber } = req.body;
+    const { username, password, email, role, name, department, joiningYear, registrationNumber, graduationYear, organisation } = req.body;
+
     try {
+        // Check if the user already exists
         const userExists = await User.findOne({ username, role, email });
         if (userExists) {
-            return res.status(400).json({ message: "user already exists" });
+            return res.status(400).json({ message: "User already exists" });
         }
 
-        const user = await User.create({ username: username, name: name, email: email, password: hashSync(password, 10), role: role });
+        // Create the user account
+        const user = await User.create({
+            username,
+            name,
+            email,
+            password: hashSync(password, 10),
+            role: role
+        });
 
-        const student = await Student.create({ department: department, joiningYear: joiningYear, registrationNumber: registrationNumber, _id: user._id })
+        // Create the alumni profile linked to the user ID
+        const alumni = await Alumni.create({
+            department,
+            joiningYear,
+            registrationNumber,
+            graduationYear,
+            organisation,
+            _id: user._id
+        });
+
         res.status(201).json({
-            message: "Student registered successfully",
-            user: { id: user._id, email: user.email, }
+            message: "Alumni registered successfully",
+            user: { id: user._id, email: user.email }
         });
 
     } catch (error) {
-        res.status(500).json({ message: 'Error registering user', error });
+        console.error(error);
+        res.status(500).json({ message: 'Error registering alumni', error });
     }
 };
 
@@ -77,30 +99,153 @@ export const createAdmin = async (req, res) => {
 
 export const getAllStudents = async (req, res) => {
     try {
-        const users = await User.find({ role: 'student' });
-        if (!users) {
-            return res.status(404).json({ message: 'Users not found' });
+        const students = await Student.find();
+        const studentIds = students.map(student => student._id);
+        const users = await User.find({ _id: { $in: studentIds } });
+
+        const allStudents = students.map(student => {
+            const user = users.find(user => user._id.toString() === student._id.toString());
+
+            return {
+                _id: student._id,
+                name: user ? user.name : 'N/A',
+                department: student.department,
+                registrationNumber: student.registrationNumber
+            };
+        });
+
+        return res.status(200).json({ message: 'All Students sent successfully', students: allStudents });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Failed to fetch students', error: error.message });
+    }
+};
+
+
+export const getStudentDetails = async (req, res) => {
+    const { id } = req.params
+    try {
+        const user = await User.findById(id);
+        const student = await Student.findById(id);
+
+        if (!user || !student) {
+            return res.status(400).json({ message: 'Failed to fetch student', error: error.message });
         }
-        // console.log(users);
-        return res.status(200).json({ message: 'All Students sent successfully', students: users });
-    } catch (e) {
-        console.error(e);
-        return res.status(500).json({ message: 'All Students sent successfully!' });
+        const studentDetails = {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            username: user.username,
+            department: student.department,
+            joiningYear: student.joiningYear,
+            registrationNumber: student.registrationNumber
+        }
+
+        return res.status(200).json({ message: 'Student Details sent successfully', studentDetails: studentDetails })
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal Server Error' })
     }
 }
+
+
+export const getAlumniDetails = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Fetch user and alumni details by ID
+        const user = await User.findById(id);
+        const alumni = await Alumni.findById(id);
+
+        if (!user || !alumni) {
+            return res.status(404).json({ message: 'Alumni not found' });
+        }
+
+        // Combine alumni and user details
+        const alumniDetails = {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            username: user.username,
+            department: alumni.department,
+            registrationNumber: alumni.registrationNumber,
+            joiningYear: alumni.joiningYear,
+            graduationYear: alumni.graduationYear,
+            organisation: alumni.organisation
+        };
+
+        return res.status(200).json({
+            message: 'Alumni details sent successfully',
+            alumniDetails: alumniDetails
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: 'Internal Server Error',
+            error: error.message
+        });
+    }
+};
+
+
+
+export const deleteStudent = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const student = await Student.findById(id);
+
+        if (!student) {
+            return res.status(404).json({ message: 'Student not found' });
+        }
+
+        await Student.findByIdAndDelete(id);
+        await User.findByIdAndDelete(id);
+
+        return res.status(200).json({ message: 'Student deleted successfully' });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Failed to delete student and user', error: error.message });
+    }
+};
+
 
 
 export const getAllAlumni = async (req, res) => {
     try {
-        const users = await User.find({ role: 'alumni' });
-        if (!users) {
-            return res.status(404).json({ message: 'Users not found' });
+        const alumniProfiles = await Alumni.find();
+        const alumniIds = alumniProfiles.map(alumni => alumni._id);
+
+        const users = await User.find({ _id: { $in: alumniIds } });
+
+        if (!alumniProfiles.length || !users.length) {
+            return res.status(404).json({ message: 'No alumni found' });
         }
-        return res.status(200).json({ message: 'All Students sent successfully', alumni: users });
-    } catch (e) {
-        console.error(e);
+
+        const allAlumni = alumniProfiles.map(alumni => {
+            const user = users.find(user => user._id.toString() === alumni._id.toString());
+
+            return {
+                _id: alumni._id,
+                name: user ? user.name : 'N/A',
+                email: user ? user.email : 'N/A',
+                department: alumni.department,
+                registrationNo: alumni.registrationNo,
+                joiningYear: alumni.joiningYear,
+                graduationYear: alumni.graduationYear,
+                organisation: alumni.organisation
+            };
+        });
+
+        return res.status(200).json({ message: 'All alumni fetched successfully', alumni: allAlumni });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Failed to fetch alumni', error: error.message });
     }
-}
+};
 
 
 export const getAllMentors = async (req, res) => {

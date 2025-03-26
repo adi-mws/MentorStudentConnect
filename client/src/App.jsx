@@ -28,6 +28,8 @@ import Webinars from './components/dashboard/Webinar.jsx'
 import { Navigate } from 'react-router-dom'
 import AdminRegistration from './pages/AdminRegistration.jsx'
 import Students from './components/dashboard/Students.jsx'
+import StudentProfile from './components/dashboard/StudentProfile.jsx'
+import Alumni from './components/dashboard/Alumni.jsx'
 function AppRoutes() {
   const { user } = useAuth();
 
@@ -37,7 +39,7 @@ function AppRoutes() {
       {/* Student and Alumni Dashboard */}
       <Route path='/dashboard' element={user && (user.role === 'student' || user.role === 'alumni') ? <Dashboard /> : <Navigate to="/" />}>
         <Route path='/dashboard' context={{ locationState: 'Dashboard' }} element={<DashboardMainPage />} />
-        <Route path='/dashboard/profile' element={<Profile />} />
+        <Route path='/dashboard/profile' element={<StudentProfile isOpen='true' />} />
         <Route path='/dashboard/mentors' element={<Mentors />} />
         <Route path='/dashboard/search-mentors' element={<SearchMentors />} />
         <Route path='/dashboard/goals' element={<Goals />} />
@@ -55,7 +57,7 @@ function AppRoutes() {
         <Route path='/admin/dashboard/profile' element={<Profile />} />
         <Route path='/admin/dashboard/mentors' element={<Mentors />} />
         <Route path='/admin/dashboard/students' element={<Students />} />
-        <Route path='/admin/dashboard/alumni' element={<Goals />} />
+        <Route path='/admin/dashboard/alumni' element={<Alumni />} />
 
       </Route>
 
@@ -81,11 +83,11 @@ function AppRoutes() {
         <Route path='/leaderboard' element={<Leaderboard />} />
         <Route path='/goals' element={<Goals />} />
         <Route path='/public-posts' element={<PublicPostsPage />} />
-        <Route path='/alumni-registration' element={<StudentAlumniRegistrationPage type="alumni" />} />
         {/* Mentors Routes */}
         <Route path='/mentor/login' element={<LoginPage type='mentor' />} />
+        <Route path='/alumni/login' element={<LoginPage type='alumni' />} />
         {/* Alumni Routes */}
-        <Route path='/alumni/registration' element={<StudentAlumniRegistrationPage />} />
+        <Route path='/alumni/registration' element={<StudentAlumniRegistrationPage  type='alumni'/>} />
         {/* Admin Routes */}
         <Route path='/admin/login' element={<LoginPage type='admin' />} />
         <Route path='/admin/registration' element={<AdminRegistration />} />
