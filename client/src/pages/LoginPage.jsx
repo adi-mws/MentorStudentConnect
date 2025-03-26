@@ -5,6 +5,8 @@ import { useNotification } from "../contexts/NotificationContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 export default function LoginPage({ type = "student" }) {
+
+
   const {
     register,
     handleSubmit,

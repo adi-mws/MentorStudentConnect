@@ -245,8 +245,58 @@ export const getAllAlumni = async (req, res) => {
         console.error(error);
         return res.status(500).json({ message: 'Failed to fetch alumni', error: error.message });
     }
+}; // Ensure correct import
+
+export const promoteAlumni = async (req, res) => {
+    const { id } = req.params;
+
+
+    try {
+        const user = await User.findById(id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Promote to mentor
+        user.role = 'mentor';
+        await user.save();
+
+        return res.status(200).json({
+            message: 'Alumni promoted to mentor successfully',
+            mentor: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role
+            }
+        });
+
+    } catch (error) {
+        console.error('Error promoting alumni:', error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
 };
 
+
+
+export const demoteAlumni = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const user = User.findById(id);
+        if (!user) {
+            return res.status(404).json({ message: 'Users not found' });
+
+        }
+
+        user.role = 'mentor';
+        await user.save();
+        return res.status(200).json({ message: 'Alumni Promoted to Mentor', mentor: user })
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal Server Error' });
+
+    }
+}
 
 export const getAllMentors = async (req, res) => {
     try {
@@ -257,6 +307,7 @@ export const getAllMentors = async (req, res) => {
         return res.status(200).json({ message: 'All Mentors sent successfully', mentors: users });
     } catch (e) {
         console.error(e);
+        return res.status(500).json({ message: 'Internal Server Error' });
     }
 }
 
