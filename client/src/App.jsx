@@ -23,6 +23,7 @@ import PublicPostsPage from './pages/PublicPostsPage'
 import StudentAlumniRegistrationPage from './pages/StudentAlumniRegistrationPage.jsx'
 import CheckPosts from './components/dashboard/CheckPosts.jsx'
 import Webinars from './components/dashboard/Webinar.jsx'
+import AdminMentorsAlumni from './components/dashboard/AdminMentorsAlumni.jsx'
 
 //aditya
 import { Navigate } from 'react-router-dom'
@@ -100,7 +101,7 @@ function AppRoutes() {
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='/leaderboard' element={<Leaderboard />} />
-        <Route path='/goals' element={<GoalsPage />} />
+        <Route path='/goals' element={<Goals />} />
         <Route path='/public-posts' element={<PublicPostsPage />} />
         <Route path='/alumni-registration' element={<StudentAlumniRegistrationPage type="alumni" />} />
       </Route>
@@ -116,6 +117,7 @@ function AppRoutes() {
         <Route path='/leaderboard' element={<Leaderboard />} />
         <Route path='/goals' element={<Goals />} />
         <Route path='/public-posts' element={<PublicPostsPage />} />
+        <Route path='/Mentors-promotion' element={<AdminMentorsAlumni />} />
         <Route path='/alumni-registration' element={<StudentAlumniRegistrationPage type="alumni" />} />
       </Route>
       {/* Mentors Routes */}
