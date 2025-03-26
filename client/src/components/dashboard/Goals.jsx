@@ -106,13 +106,11 @@ export default function Goals() {
         setStudentGoals(updatedGoals);
         setShowDeleteConfirm(null);
         
-        // Clean up completed tasks for the deleted goal
         const newCompletedTasks = {...completedTasks};
         Object.keys(newCompletedTasks).forEach(key => {
             if (key.startsWith(`${index}-`)) {
                 delete newCompletedTasks[key];
             } else {
-                // Adjust keys for goals after the deleted one
                 const [goalIdx, taskIdx] = key.split('-').map(Number);
                 if (goalIdx > index) {
                     newCompletedTasks[`${goalIdx-1}-${taskIdx}`] = newCompletedTasks[key];
@@ -254,7 +252,7 @@ export default function Goals() {
                                             onClick={() => setSelectedGoal(null)} 
                                             className="btn btn-secondary"
                                         >
-                                            Collapse Checklist
+                                            Collapse 
                                         </button>
                                     </div>
                                 ) : (
@@ -262,7 +260,7 @@ export default function Goals() {
                                         onClick={() => setSelectedGoal(goalIndex)} 
                                         className="btn btn-primary"
                                     >
-                                        Show Checklist
+                                        Show Details
                                     </button>
                                 )}
                                 

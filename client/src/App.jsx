@@ -22,6 +22,7 @@ import DiscussionForum from './components/dashboard/DiscussionForum'
 import PublicPostsPage from './pages/PublicPostsPage'
 import StudentAlumniRegistrationPage from './pages/StudentAlumniRegistrationPage.jsx'
 import CheckPosts from './components/dashboard/CheckPosts.jsx'
+import Webinars from './components/dashboard/Webinar.jsx'
 
 //aditya
 import { Navigate } from 'react-router-dom'
